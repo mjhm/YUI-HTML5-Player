@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="cache-control" content="no-cache" />
+	<title>YUI</title>
+	<link rel="stylesheet" href="css/player.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+		YUI({
+			modules: {
+				'gallery-player': {
+					fullpath:'js/gallery-player.js',
+					requires: ['widget','node','slider', 'anim']
+				}
+			}
+		}).use('gallery-player', function(Y){
+			player = new Y.Player({
+				contentBox: '#video',
+				type: 'video',
+				sources:[
+					{title:'video/video.mov', type:'video/mp4'},
+					{title:'video/video.mp4', type:'video/mp4'},
+					{title:'video/video.ogv', type:'video/ogg'}
+				],
+				poster: 'images/poster.png',
+				preload: false,
+				autoplay: false,
+				loop: false,
+				standardControls: false,
+				controlSet: ['play','rewind', 'forward', 'fullscreen', 'volume', 'scrubber', 'counters'],
+				width: 800,
+				height: null,
+				degrade: '<p>Please use Firefox, Safari, or Chrome</p>'
+			});
+			player.render();
+			player.focus();
+		});
+	</script>
+</head>
+<body>
+<h1>YUI 3 HTML5 Player</h1>
+<div id="video"></div>
+<div class="disclaimer" xmlns:cc="http://creativecommons.org/ns#" about="http://www.flickr.com/photos/96dpi/3424932440/"><strong>Credit and License for Video:</strong> Video By 96dpi / <a rel="cc:attributionURL" href="http://www.flickr.com/photos/96dpi/">http://www.flickr.com/photos/96dpi/</a> / <a rel="license" href="http://creativecommons.org/licenses/by-nc/2.0/">CC BY-NC 2.0</a> / Found on Flickr / Music Added by Josh Brickner</div>
+</body>
+</html>
