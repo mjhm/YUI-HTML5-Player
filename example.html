@@ -4,14 +4,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="cache-control" content="no-cache" />
 	<title>YUI</title>
-	<link rel="stylesheet" href="css/player.css" type="text/css" media="screen" title="no title" charset="utf-8" />
 	<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
 		var player;
 		YUI({
 			modules: {
 				'gallery-player': {
-					fullpath:'js/gallery-player.js',
+					fullpath:'js/gallery-player-min.js',
 					requires: ['widget','node','slider', 'anim', 'array']
 				}
 			}
@@ -24,7 +23,7 @@
 					{title:'http://macinjosh.s3.amazonaws.com/video.mp4', type:'video/mp4'},
 					{title:'http://macinjosh.s3.amazonaws.com/video.ogv', type:'video/ogg'}
 				],
-				poster: 'images/poster.png',
+				poster: 'video/poster.png',
 				preload: false,
 				autoplay: true,
 				loop: false,
