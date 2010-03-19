@@ -14,13 +14,13 @@
 					requires: ['widget','node','slider', 'anim']
 				}
 			}
-		}).use('gallery-player', function(Y){
+		}).use('gallery-player', 'node-base', function(Y){
 			player = new Y.Player({
 				contentBox: '#video',
 				type: 'video',
 				sources:[
-					{title:'video/video.mov', type:'video/mp4'},
-					{title:'video/video.mp4', type:'video/mp4'},
+					{title:'http://macinjosh.s3.amazonaws.com/video.mov', type:'video/mp4'},
+					{title:'http://macinjosh.s3.amazonaws.com/video.mp4', type:'video/mp4'},
 					{title:'video/video.ogv', type:'video/ogg'}
 				],
 				poster: 'images/poster.png',
@@ -33,8 +33,7 @@
 				height: null,
 				degrade: '<p>Please use Firefox, Safari, or Chrome</p>'
 			});
-			player.render();
-			player.focus();
+			Y.on("load", function(){player.render()});
 		});
 	</script>
 </head>

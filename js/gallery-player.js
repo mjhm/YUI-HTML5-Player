@@ -52,8 +52,13 @@ YUI().add('gallery-player', function(Y) {
 	    },
 		player: null,
 		controls: {},
-		scrubEvent: null
-	}
+		scrubEvent: null,
+		playEvent: null,
+		rewindEvent : null,
+		forwardEvent: null,
+		volumeEvent: null,
+		fullscreenEvent : null
+	};
 
 	Y.extend(Player, Y.Widget, {
 			initializer: function() {
@@ -116,8 +121,6 @@ YUI().add('gallery-player', function(Y) {
 					this.get('player').on('volumechange', this._eventVolumeXhange, this);
 					this.get('player').on('waiting', this._eventWaiting, this);
 					this.get('controls').volume_slider.on('valueChange', this.volume, this);
-					this.get('controls').scrubber_slider.on('slideStart', this.beginScrub, this);
-					this.get('controls').scrubber_slider.on('slideEnd', this.endScrub, this);
 					this.get('boundingBox').on('mouseover', this.showControls, this);	
 					this.get('boundingBox').on('mouseout', this.hideControls, this);
 				}
@@ -182,7 +185,11 @@ YUI().add('gallery-player', function(Y) {
 				rewind = Y.Node.create('<img src="images/rewind.png" class="'+prefix+'rewind" width="33" height="19" alt="Rewind">');
 				forward = Y.Node.create('<img src="images/forward.png" class="'+prefix+'forward" width="33" height="19" alt="Forward">');
 				volume = Y.Node.create('<div class="yui-widget yui-slider '+prefix+'volume"><div class="yui-slider-content"><div class="yui-slider-rail yui-slider-rail-x"><div class="yui-slider-thumb"></div></div></div></div>');
-				fullscreen = Y.Node.create('<img src="images/fullscreen.png" class="'+prefix+'fullscreen" width="15" height="16" alt="Fullscreen">');
+
+				if (player._node.webkitEnterFullScreen !== undefined) {
+					fullscreen = Y.Node.create('<img src="images/fullscreen.png" class="'+prefix+'fullscreen" width="15" height="16" alt="Fullscreen">');
+				}
+				
 				scrubber_bar = Y.Node.create('<div class="yui-widget yui-slider '+prefix+'scrubber_bar"><div class="yui-slider-content"><div class="yui-slider-rail yui-slider-rail-x"><div class="yui-slider-thumb"></div></div></div></div>');
 				progress = Y.Node.create('<span class="'+prefix+'progress">00:00:00</span>');
 				length = Y.Node.create('<span class="'+prefix+'length">00:00:00</span>');
@@ -204,14 +211,18 @@ YUI().add('gallery-player', function(Y) {
 				controls.prepend(forward);
 				controls.prepend(rewind);
 				controls.prepend(play);
-
-				// Setup Basic Events
-				play.on('click', this.play, this);
-				rewind.on('click', this.rewind, this);
-				forward.on('click', this.forward, this);
-				volume.on('click', this.volume, this);
-				fullscreen.on('click', this.fullscreen, this);
-
+				
+				play.setStyle('opacity', .5);
+				forward.setStyle('opacity', .5);
+				rewind.setStyle('opacity', .5);
+				scrubber_slider.get('contentBox').setStyle('opacity', .5);
+				
+				// Add basic events
+				this.volumeEvent = this.get('controls').volume.on('click', this.volume, this);
+				if (player._node.webkitEnterFullScreen !== undefined) {
+					this.fullscreenEvent = this.get('controls').fullscreen.on('click', this.fullscreen, this);
+				}
+				
 				// Add Controls to DOM
 				player.ancestor().insert(controls);
 				volume_slider.render();
@@ -292,11 +303,22 @@ YUI().add('gallery-player', function(Y) {
 			_eventCanPlay: function(e) {
 				// Sent when the browser can resume playback of the media data, but estimates that if playback is started now, the media resource could not be rendered at the current playback rate up to its end without having to stop for further buffering of content.
 				// console.log(e.type);
+				this.playEvent = this.get('controls').play.on('click', this.play, this);
+				this.rewindEvent = this.get('controls').rewind.on('click', this.rewind, this);
+				this.forwardEvent = this.get('controls').forward.on('click', this.forward, this);
+
+				this.get('controls').scrubber_slider.on('slideStart', this.beginScrub, this);
+				this.get('controls').scrubber_slider.on('slideEnd', this.endScrub, this);
+
+				this.get('controls').play.setStyle('opacity', 1);
+				this.get('controls').forward.setStyle('opacity', 1);
+				this.get('controls').rewind.setStyle('opacity', 1);
+				this.get('controls').scrubber_slider.get('contentBox').setStyle('opacity', 1);				
 			},
 
 			_eventCanPlayThrough: function(e) {
 				// Sent when the browser estimates that if playback is started now, the media resource could be rendered at the current playback rate all the way to its end without having to stop for further buffering.
-				// console.log(e.type);
+				// console.log(e.type);								
 			},
 
 			_eventDurationChange: function(e) {
@@ -326,7 +348,7 @@ YUI().add('gallery-player', function(Y) {
 
 			_eventLoadedData: function(e) {
 				// Sent when the browser can render the media data at the current playback position for the first time.
-				// console.log(e.type);
+				//console.log(e.type);
 			},
 
 			_eventLoadedMetaData: function(e) {
@@ -365,6 +387,15 @@ YUI().add('gallery-player', function(Y) {
 			_eventProgress: function(e) {
 				// Sent when the browser stops playback because it is waiting for the next frame.
 				// console.log(e.type);
+				if (this.get('playEvent') != null)
+					this.get('playEvent').detach();
+					
+				if (this.get('forwardEvent') != null)
+					this.get('forwardEvent').detach();
+
+				if (this.get('rewindEvent') != null)
+					this.get('rewindEvent').detach();
+				
 			},
 
 			_eventRateChange: function(e) {
