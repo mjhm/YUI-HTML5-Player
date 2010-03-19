@@ -12,7 +12,7 @@
 			modules: {
 				'gallery-player': {
 					fullpath:'js/gallery-player.js',
-					requires: ['widget','node','slider', 'anim']
+					requires: ['widget','node','slider', 'anim', 'array']
 				}
 			}
 		}).use('gallery-player', 'node-base', function(Y){
@@ -22,22 +22,21 @@
 				sources:[
 					{title:'http://macinjosh.s3.amazonaws.com/video.mov', type:'video/mp4'},
 					{title:'http://macinjosh.s3.amazonaws.com/video.mp4', type:'video/mp4'},
-					{title:'http://macinjosh.s3.amazonaws.com/video.ogv', type:'application/ogg'}
+					{title:'http://macinjosh.s3.amazonaws.com/video.ogv', type:'video/ogg'}
 				],
 				poster: 'images/poster.png',
 				preload: false,
 				autoplay: true,
 				loop: false,
 				standardControls: false,
-				controlSet: ['play','rewind', 'forward', 'fullscreen', 'volume', 'scrubber', 'counters'],
+				controlSet: ['play','rewind', 'forward', 'fullscreen', 'volume', 'scrubbers'],
+				//controlSet: ['play', 'scrubber'],
 				width: 800,
 				height: 450,
 				degrade: '<p>Please use Firefox, Safari, or Chrome</p>'
 			});
 			player.render();
 			player.focus();
-			
-			Y.on("domready", function () {player.syncUI();})
 		});
 	</script>
 </head>

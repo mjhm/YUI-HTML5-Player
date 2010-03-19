@@ -86,7 +86,6 @@ How To
 		- _fullscreen_: Fullscreen button
 		- _volume_: Volume Slider
 		- _scrubber_: Scrubber Slider
-		- _counters_: Progress/Length counters 
 	- __width__: An integer representing the desire width of player in pixels. The video will be letter-boxed to preserve its aspect ratio.
 	- __height__: An integer representing the desire width of player in pixels. The video will be letter-boxed to preserve its aspect ratio.
 	- __degrade__: Content to be shown in browser that do not support &lt;video&gt;.
