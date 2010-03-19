@@ -4,6 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="cache-control" content="no-cache" />
 	<title>YUI</title>
+	<link rel="stylesheet" href="css/gallery-player-core.css" type="text/css" media="screen" charset="utf-8" />
 	<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
 		var player;
@@ -18,6 +19,8 @@
 			player = new Y.Player({
 				contentBox: '#video',
 				type: 'video',
+				stylesheet: 'false',
+				images: 'images/',
 				sources:[
 					{title:'http://macinjosh.s3.amazonaws.com/video.mov', type:'video/mp4'},
 					{title:'http://macinjosh.s3.amazonaws.com/video.mp4', type:'video/mp4'},
@@ -29,7 +32,6 @@
 				loop: false,
 				standardControls: false,
 				controlSet: ['play','rewind', 'forward', 'fullscreen', 'volume', 'scrubber'],
-				//controlSet: ['play', 'scrubber'],
 				width: 800,
 				height: 450,
 				degrade: '<p>Please use Firefox, Safari, or Chrome</p>'

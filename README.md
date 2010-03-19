@@ -40,30 +40,33 @@ How To
 
 2. Setup The YUI HTML5 Player
 
+		var player;
 		YUI({
 			modules: {
 				'gallery-player': {
-					fullpath:'js/gallery-player.js',
-					requires: ['widget','node','slider', 'anim']
+					fullpath:'js/gallery-player-min.js',
+					requires: ['widget','node','slider', 'anim', 'array']
 				}
 			}
-		}).use('gallery-player', function(Y){
+		}).use('gallery-player', 'node-base', function(Y){
 			player = new Y.Player({
 				contentBox: '#video',
 				type: 'video',
+				stylesheet: 'false',
+				images: 'images/',
 				sources:[
-					{title:'path/to/videp.mov', type:'video/mp4'},
-					{title:'path/to/video.mp4', type:'video/mp4'},
-					{title:'path/to/video.ogv', type:'video/ogg'}
+					{title:'http://macinjosh.s3.amazonaws.com/video.mov', type:'video/mp4'},
+					{title:'http://macinjosh.s3.amazonaws.com/video.mp4', type:'video/mp4'},
+					{title:'http://macinjosh.s3.amazonaws.com/video.ogv', type:'video/ogg'}
 				],
-				poster: 'path/to/poster.png',
+				poster: 'video/poster.png',
 				preload: false,
-				autoplay: false,
+				autoplay: true,
 				loop: false,
 				standardControls: false,
-				controlSet: ['play','rewind', 'forward', 'fullscreen', 'volume', 'scrubber', 'counters'],
+				controlSet: ['play','rewind', 'forward', 'fullscreen', 'volume', 'scrubber'],
 				width: 800,
-				height: null,
+				height: 450,
 				degrade: '<p>Please use Firefox, Safari, or Chrome</p>'
 			});
 			player.render();
@@ -72,6 +75,8 @@ How To
 
 	_Note: For illustrative purposes all available options were used in the example above._
 	
+	- stylesheet: path to the stylesheet or the string 'false' to not use any, if this property is omitted it defaults to: 'assets/gallery-player-core.css'
+	- images: path to the folder of images used by the player, defaults to: 'assets/images/'
 	- __contentBox__: A &lt;div&gt; in which you'd like to place the player
 	- __type__: This will always be 'video' until audio support is added
 	- __sources__: A list of paths to source files and their MIME-Types. This is used to provide videos in various codecs in order to hit all platforms (e.g. Theora, MPEG-4, etc.).
