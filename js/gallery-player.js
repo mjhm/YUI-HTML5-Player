@@ -121,7 +121,7 @@ function(Y) {
                     this.get('controls').volume_slider.on('valueChange', this.volume, this);
                     this.get('controls').volume.on('click', this.volume, this);
                 }
-                if (this.get('controlSet').indexOf('fullscreen') !== -1) {
+                if (this.get('controlSet').indexOf('fullscreen') !== -1 &&  this.get('player')._node.webkitEnterFullScreen !== undefined) {
                     this.get('controls').fullscreen.on('click', this.fullscreen, this);
                 }
                 this.get('player').on('volumechange', this._eventVolumeChange, this);
