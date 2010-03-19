@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="css/player.css" type="text/css" media="screen" title="no title" charset="utf-8" />
 	<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
+		var player;
 		YUI({
 			modules: {
 				'gallery-player': {
@@ -21,19 +22,22 @@
 				sources:[
 					{title:'http://macinjosh.s3.amazonaws.com/video.mov', type:'video/mp4'},
 					{title:'http://macinjosh.s3.amazonaws.com/video.mp4', type:'video/mp4'},
-					{title:'video/video.ogv', type:'video/ogg'}
+					{title:'http://macinjosh.s3.amazonaws.com/video.ogv', type:'application/ogg'}
 				],
 				poster: 'images/poster.png',
 				preload: false,
-				autoplay: false,
+				autoplay: true,
 				loop: false,
 				standardControls: false,
 				controlSet: ['play','rewind', 'forward', 'fullscreen', 'volume', 'scrubber', 'counters'],
 				width: 800,
-				height: null,
+				height: 450,
 				degrade: '<p>Please use Firefox, Safari, or Chrome</p>'
 			});
-			Y.on("load", function(){player.render()});
+			player.render();
+			player.focus();
+			
+			Y.on("domready", function () {player.syncUI();})
 		});
 	</script>
 </head>

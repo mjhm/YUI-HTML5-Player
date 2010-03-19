@@ -126,7 +126,11 @@ YUI().add('gallery-player', function(Y) {
 				}
 			},
 
-			syncUI: function(){},
+			syncUI: function(){
+				x = ((this.get('player').getStyle('width').replace('px','')) - 438) / 2 + this.get('player').getX();
+				y = ((this.get('player').getStyle('height').replace('px','')) - 59) / 1 + this.get('player').getY() - 25;
+				this.get('controls').controls.setXY([x, y]);
+			},
 
 			destructor: function(){},
 
@@ -227,10 +231,6 @@ YUI().add('gallery-player', function(Y) {
 				player.ancestor().insert(controls);
 				volume_slider.render();
 				scrubber_slider.render();
-				
-				x = ((player.getStyle('width').replace('px','')) - 438) / 2 + player.getX();
-				y = ((player.getStyle('height').replace('px','')) - 59) / 1 + player.getY() - 25;
-				controls.setXY([x, y]);
 			},
 
 			play: function(e) {
@@ -291,7 +291,7 @@ YUI().add('gallery-player', function(Y) {
 
 			hideControls: function() {
 				var hide = new Y.Anim({node: this.get('controls').controls, to: {opacity: 0}, duration: .25});
-				hide.run();	
+				hide.run();
 			},
 
 			// Begin Event Handlers
@@ -441,6 +441,18 @@ YUI().add('gallery-player', function(Y) {
 			_eventWaiting: function(e) {
 				// Sent when the browser stops playback because it is waiting for the next frame.
 				// console.log(e.type);
+				
+				this.playEvent = this.get('controls').play.detach();
+				this.rewindEvent = this.get('controls').rewind.detach();
+				this.forwardEvent = this.get('controls').forward.detach();
+
+				this.get('controls').scrubber_slider.detach();
+				this.get('controls').scrubber_slider.detach();
+
+				this.get('controls').play.setStyle('opacity', .5);
+				this.get('controls').forward.setStyle('opacity', .5);
+				this.get('controls').rewind.setStyle('opacity', .5);
+				this.get('controls').scrubber_slider.get('contentBox').setStyle('opacity', .5);
 			},
 
 			_convertSecondsToTimeStamp: function(length) {
