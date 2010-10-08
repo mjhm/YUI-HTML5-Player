@@ -3,33 +3,36 @@ YUI HTML5 Player
 
 YUI HTML5 Player is a YUI 3 widget that creates a video player using the HTML5 video tag and JavaScript that is based on YUI 3. It was started as entry to the YUI 3 Gallery Contest in March 2010.
 
-Features
+The 10/07/2010 version updated the code to YUI 3.2 standards and structure, added some new features, and fixed some bugs.  The primary goal of this revision was to adapt Josh's code to create a launching pad for others to dive into JavaScript programming of HTML5 video widgets.  Therefore the code was substantially reorganized and documented to make it more hackable and adaptable.  For example the code now has a facility for logging and tracking any HTML5 video events.
+
+Original Features
 --------
 
 - Get a player in 3 easy steps
-- Full Javascript/HTML/CSS UI
+- Full Javascript/HTML5/CSS UI
 - Full Availability of HTML5 &lt;video&gt; attributes 
-- Pass content to be displayed in browsers that do not support &lt;video&gt;
 - Support for multiple formats for each video.
-- Support for WebKit's fullscreen API
 - Full Range of Video Controls
 - Specify which controls you need
 - Follows YUI practices (or at least tries too!)
 
-Features Coming Soon
---------------------
+New Features
+------------
 
-- Support for &lt;audio&gt;
-- Better cross-browser compatibility
-- Pseudo-Fullscreen capabilites (will size video to browser window)
+- Loading progress indicator.
+- Full screen mode (as triggered by browser e.g. F11)
+- Scrubbing seamlessly while playing.
+
 
 YUI Modules Use
 ---------------
 
 - Widget
-- Node
 - Slider
 - Animation
+- AsyncQueue
+- Event Simulation
+
 
 How To
 ------
